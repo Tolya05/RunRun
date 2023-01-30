@@ -36,8 +36,8 @@ int main() {
     }
 
     Entity Player;
-    Player.Body.width = 32;
-    Player.Body.height = 64;
+    Player.Body.width = BLOCK_SIZE * 2;
+    Player.Body.height = BLOCK_SIZE * 4;
     Player.Body.x = (GetScreenWidth() / 2) - (Player.Body.width / 2);
     Player.Body.y = (GetScreenHeight() / 2);
     Player.Energy = 500;
@@ -50,15 +50,14 @@ int main() {
     //    Arrows[i].Shot = false;
     //}
 
-    Entity Monsters[10];
+    Monster Monsters[10];
 
     for (int i = 0; i < 10; i++) {
-        Monsters[i].Body.x = GetRandomValue(100, 300);
-        Monsters[i].Body.y = GetRandomValue(100, 300);
-        Monsters[i].Body.width = 32;
-        Monsters[i].Body.height = 64;
-        Monsters[i].Energy = 0;
-        Monsters[i].FacingDirection = 0;
+        Monsters[i].Body.x = GetRandomValue(72, 1000);
+        Monsters[i].Body.y = GetRandomValue(72, 700);
+        Monsters[i].Body.width = BLOCK_SIZE * 2;
+        Monsters[i].Body.height = BLOCK_SIZE * 4;
+        Monsters[i].Facing = 0;
         Monsters[i].Health = 100;
     }
 

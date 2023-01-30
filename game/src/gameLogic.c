@@ -6,7 +6,7 @@ void GameLogic(
     int *Quit,
     RectangleObject Map[MAP_HEIGHT][MAP_WIDTH],
     Entity *Player,
-    Entity (*Monsters)[10]
+    Monster (*Monsters)[10]
 ) {
     float delta = GetFrameTime();
     float prex = Player->Body.x;
@@ -65,29 +65,36 @@ void GameLogic(
         Player->FacingDirection = 0;
     }
 
-    //for (int i = 0; i < 10; i++) {
-    //    float Mprex = Monsters[i]->Body.x;
-    //    float Mprey = Monsters[i]->Body.y;
-    //    if (Monsters[i]->Body.x > Player->Body.x) {
-    //        if (Monsters[i]->Body.x > 0 + 32) Monsters[i]->Body.x -= 250 * delta;
-    //    }
-    //    else if (Monsters[i]->Body.x < Player->Body.x) {
-    //        if (Monsters[i]->Body.x < (GetScreenWidth() - 64)) Monsters[i]->Body.x -= 250 * delta;
-    //    }
-    //    for (int y = 0; y < MAP_HEIGHT; y++) {
-    //        for (int x = 0; x < MAP_WIDTH; x++)
-    //        {
-    //            RectangleObject rectObj = Map[y][x];
-    //            if (rectObj.value == 0)
-    //            {
-    //                if (CheckCollisionRecs(Monsters[i]->Body, rectObj.rect)) {
-    //                    Monsters[i]->Body.x = prex;
-    //                    Monsters[i]->Body.y = prey;
-    //                }
-    //            }
-    //        }
-    //    }
-    //}
+    for (int i = 0; i < 10; i++) {
+        float Mprex = Monsters[i]->Body.x;
+        float Mprey = Monsters[i]->Body.y;
+        if (Monsters[i]->Body.x > Player->Body.x) {
+            Monsters[i]->Body.x -= 250 * delta;
+        }
+        else if (Monsters[i]->Body.x < Player->Body.x) {
+            Monsters[i]->Body.x += 250 * delta;
+        }
+        if (Monsters[i]->Body.y > Player->Body.y) {
+            Monsters[i]->Body.y -= 250 * delta;
+        }
+        else if (Monsters[i]->Body.y > Player->Body.y) {
+            Monsters[i]->Body.y += 250 * delta;
+        }
+
+        for (int y = 0; y < MAP_HEIGHT; y++) {
+            for (int x = 0; x < MAP_WIDTH; x++)
+            {
+                RectangleObject rectObj = Map[y][x];
+                if (rectObj.value == 0)
+                {
+                    if (CheckCollisionRecs(Monsters[i]->Body, rectObj.rect)) {
+                        Monsters[i]->Body.x = Mprex;
+                        Monsters[i]->Body.y = Mprey;
+                    }
+                }
+            }
+        }
+    }
 
     for (int y = 0; y < MAP_HEIGHT; y++)
     {

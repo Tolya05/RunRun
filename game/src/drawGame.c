@@ -2,12 +2,13 @@
 #define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
 #include "raymath.h"
+#include "rlgl.h"
 
 #define BLOCK_SIZE 16
 #define MAP_WIDTH 75
 #define MAP_HEIGHT 50
 
-typedef struct RectangleObject
+typedef struct RectangleObject // 0 = Stone, 1 = Grass
 {
     Rectangle rect;
     int value;
@@ -20,6 +21,13 @@ typedef struct Entity {
     float Health;
     int FacingDirection; // 0 = up, 1 = right, 2 = down, 3 = left
 } Entity;
+
+typedef struct Monster {
+    Rectangle Body;
+    float Health;
+    int Facing;
+} Monster;
+
 
 //typedef struct Projectile {
 //    Vector2 position;
@@ -99,7 +107,7 @@ void DrawMenu(int *Screen, int *Quit) {
     EndDrawing();
 }
 
-void DrawGame(RectangleObject Map[MAP_HEIGHT][MAP_WIDTH], Entity Player, int *Screen, Entity (*Monsters)[10]) {
+void DrawGame(RectangleObject Map[MAP_HEIGHT][MAP_WIDTH], Entity Player, int *Screen, Monster (*Monsters)[10]) {
     if (IsKeyPressed(KEY_ESCAPE)) *Screen = 0;
 
     Rectangle EnergyBar = {0, 0, 100, 25};
@@ -115,10 +123,6 @@ void DrawGame(RectangleObject Map[MAP_HEIGHT][MAP_WIDTH], Entity Player, int *Sc
     DrawMap(Map);
 
     DrawRectangleRec(Player.Body, BLACK);
-
-    //for (int i = 0; i < 30; i++) {
-    //    if (Arrows[i]->Shot == true) DrawCircleV(Arrows[i]->position, 5, WHITE);
-    //}
 
     for (int i = 0; i < 10; i++) {
         DrawRectangleRec(Monsters[i]->Body, RED);
