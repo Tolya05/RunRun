@@ -8,12 +8,12 @@
 #define MAP_WIDTH 75
 #define MAP_HEIGHT 50
 
-typedef struct RectangleObject // 0 = Stone, 1 = Grass
+typedef struct Block // 0 = Stone, 1 = Grass
 {
     Rectangle rect;
     int value;
     Texture2D Texture;
-} RectangleObject;
+} Block;
 
 typedef struct Entity {
     Rectangle Body;
@@ -35,20 +35,20 @@ typedef struct Monster {
 //    bool Shot;
 //} Projectile;
 
-void DrawMap(RectangleObject map[MAP_HEIGHT][MAP_WIDTH])
+void DrawMap(Block map[MAP_HEIGHT][MAP_WIDTH])
 {
     for (int y = 0; y < MAP_HEIGHT; y++)
     {
         for (int x = 0; x < MAP_WIDTH; x++)
         {
-            RectangleObject rectObj = map[y][x];
-            if (rectObj.value == 1)
+            Block block = map[y][x];
+            if (block.value == 1)
             {
-                DrawTextureRec(rectObj.Texture, rectObj.rect, (Vector2){rectObj.rect.x, rectObj.rect.y}, WHITE);
+                DrawTextureRec(block.Texture, block.rect, (Vector2){block.rect.x, block.rect.y}, WHITE);
             }
             else
             {
-                DrawTextureRec(rectObj.Texture, rectObj.rect, (Vector2){rectObj.rect.x, rectObj.rect.y}, WHITE);
+                DrawTextureRec(block.Texture, block.rect, (Vector2){block.rect.x, block.rect.y}, WHITE);
             }
         }
     }
@@ -107,7 +107,7 @@ void DrawMenu(int *Screen, int *Quit) {
     EndDrawing();
 }
 
-void DrawGame(RectangleObject Map[MAP_HEIGHT][MAP_WIDTH], Entity Player, int *Screen, Monster (*Monsters)[10]) {
+void DrawGame(Block Map[MAP_HEIGHT][MAP_WIDTH], Entity Player, int *Screen, Monster (*Monsters)[10]) {
     if (IsKeyPressed(KEY_ESCAPE)) *Screen = 0;
 
     Rectangle EnergyBar = {0, 0, 100, 25};
@@ -133,6 +133,8 @@ void DrawGame(RectangleObject Map[MAP_HEIGHT][MAP_WIDTH], Entity Player, int *Sc
 
     GuiProgressBar(HealthBar, "", "", Player.Health, 0, 100);
     DrawText("Health", HealthBar.x - (MeasureText("Health", 30) + 10), HealthBar.y, 30, WHITE);
+
+    DrawFPS(100, 700);
 
     EndDrawing();
 }

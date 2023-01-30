@@ -4,7 +4,7 @@
 void GameLogic(
     int *Screen,
     int *Quit,
-    RectangleObject Map[MAP_HEIGHT][MAP_WIDTH],
+    Block Map[MAP_HEIGHT][MAP_WIDTH],
     Entity *Player,
     Monster (*Monsters)[10]
 ) {
@@ -14,6 +14,9 @@ void GameLogic(
 
     if (Player->Energy < 500.0) {
         Player->Energy += 25 * delta;
+    }
+    if (Player->Health < 100) {
+        Player->Health += 5 * delta;
     }
 
     if (IsKeyDown(KEY_LEFT_SHIFT) && Player->Energy > 0) {
@@ -68,23 +71,21 @@ void GameLogic(
     for (int i = 0; i < 10; i++) {
         float Mprex = Monsters[i]->Body.x;
         float Mprey = Monsters[i]->Body.y;
-        if (Monsters[i]->Body.x > Player->Body.x) {
-            Monsters[i]->Body.x -= 250 * delta;
+        if (Monsters[i]->Body.x > Player->Body.x) Monsters[i]->Body.x -= 250 * delta;
+        if (Monsters[i]->Body.x < Player->Body.x) Monsters[i]->Body.x += 250 * delta;
+        if (Monsters[i]->Body.y > Player->Body.y) Monsters[i]->Body.y -= 250 * delta;
+        if (Monsters[i]->Body.y > Player->Body.y) Monsters[i]->Body.y += 250 * delta;
+
+        if (CheckCollisionRecs(Monsters[i]->Body, Player->Body)) {
+            Player->Health -= 10;
+            Player->Body.y += 100 * delta;
         }
-        else if (Monsters[i]->Body.x < Player->Body.x) {
-            Monsters[i]->Body.x += 250 * delta;
-        }
-        if (Monsters[i]->Body.y > Player->Body.y) {
-            Monsters[i]->Body.y -= 250 * delta;
-        }
-        else if (Monsters[i]->Body.y > Player->Body.y) {
-            Monsters[i]->Body.y += 250 * delta;
-        }
+        
 
         for (int y = 0; y < MAP_HEIGHT; y++) {
             for (int x = 0; x < MAP_WIDTH; x++)
             {
-                RectangleObject rectObj = Map[y][x];
+                Block rectObj = Map[y][x];
                 if (rectObj.value == 0)
                 {
                     if (CheckCollisionRecs(Monsters[i]->Body, rectObj.rect)) {
@@ -100,7 +101,7 @@ void GameLogic(
     {
         for (int x = 0; x < MAP_WIDTH; x++)
         {
-            RectangleObject rectObj = Map[y][x];
+            Block rectObj = Map[y][x];
             if (rectObj.value == 0)
             {
                 if (CheckCollisionRecs(Player->Body, rectObj.rect)) {

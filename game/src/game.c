@@ -14,11 +14,11 @@ int main() {
     Image Stone = LoadImage("resources/stone.png");
     Image Grass = LoadImage("resources/grass.png");
 
-    RectangleObject Map[MAP_HEIGHT][MAP_WIDTH];
+    Block Map[MAP_HEIGHT][MAP_WIDTH];
 
     for (int y = 0; y < MAP_HEIGHT; y++) {
         for (int x = 0; x < MAP_WIDTH; x++) {
-            RectangleObject rectObj;
+            Block rectObj;
             rectObj.rect.x = x * BLOCK_SIZE;
             rectObj.rect.y = y * BLOCK_SIZE;
             rectObj.rect.width = BLOCK_SIZE;
@@ -53,8 +53,10 @@ int main() {
     Monster Monsters[10];
 
     for (int i = 0; i < 10; i++) {
-        Monsters[i].Body.x = GetRandomValue(72, 1000);
-        Monsters[i].Body.y = GetRandomValue(72, 700);
+        //Monsters[i].Body.x = GetRandomValue((BLOCK_SIZE * 2) + 20, (BLOCK_SIZE * 70));
+        //Monsters[i].Body.y = GetRandomValue((BLOCK_SIZE * 2), (BLOCK_SIZE * 45));
+        Monsters[i].Body.x = 350;
+        Monsters[i].Body.y = 300;
         Monsters[i].Body.width = BLOCK_SIZE * 2;
         Monsters[i].Body.height = BLOCK_SIZE * 4;
         Monsters[i].Facing = 0;
