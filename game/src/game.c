@@ -66,13 +66,21 @@ int main() {
     while (Quit == 0) {
         if (WindowShouldClose()) Quit = 1;
 
-        GameLogic(
-            &GamePlaying,
-            &Quit,
-            Map,
-            &Player,
-            &Monsters
-        );
+        if (GamePlaying == 0) {
+        DrawMenu(&GamePlaying, &Quit);
+        }
+        else if (GamePlaying == 1) {
+            GameLogic(
+                &GamePlaying,
+                &Quit,
+                Map,
+                &Player,
+                &Monsters
+            );
+        }
+        else if (GamePlaying == 2) {
+            DrawCredits(&GamePlaying);
+        }
     }
 
     UnloadImage(Stone);

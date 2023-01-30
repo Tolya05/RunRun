@@ -112,14 +112,16 @@ void GameLogic(
         }
     }
 
-    if (*Screen == 0) {
-        DrawMenu(Screen, Quit);
-    }
-    else if (*Screen == 1) {
-        DrawGame(Map, *Player, Screen, Monsters);
-    }
-    else if (*Screen == 2) {
-        DrawCredits(Screen);
-    }
+    DrawGame(Map, *Player, Screen, Monsters);
+
+    //if (*Screen == 0) {
+    //    DrawMenu(Screen, Quit);
+    //}
+    //else if (*Screen == 1) {
+    //    DrawGame(Map, *Player, Screen, Monsters);
+    //}
+    //else if (*Screen == 2) {
+    //    DrawCredits(Screen);
+    //}
 
 }
