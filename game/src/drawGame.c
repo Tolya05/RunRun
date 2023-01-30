@@ -28,13 +28,6 @@ typedef struct Monster {
     int Facing;
 } Monster;
 
-
-//typedef struct Projectile {
-//    Vector2 position;
-//    Vector2 velocity;
-//    bool Shot;
-//} Projectile;
-
 void DrawMap(Block map[MAP_HEIGHT][MAP_WIDTH])
 {
     for (int y = 0; y < MAP_HEIGHT; y++)
